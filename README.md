@@ -15,7 +15,8 @@ Generate a series of pixelated JPEG images and merge them into a GIF animation
 
 ```bash
 chmod +x pixie.sh
-./pixie.sh
+./pixie.sh <file_path>
+./pixie.sh ./j.jpg
 ```
 
 ## References
