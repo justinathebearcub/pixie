@@ -40,8 +40,7 @@ fn pixelate(img: &DynamicImage, new_dims: (u32, u32)) -> ImageMatrix {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Cli::parse();
-    let file_path = args.file_path;
-    let file_name = Path::new(&file_path).file_name().unwrap().to_str().unwrap();
+    let mut file_path = args.file_path;
     let pixelate_width = args.pixelate_width;
     let pixelate_height = args.pixelate_height;
 
@@ -49,11 +48,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let (width, height) = image.dimensions();
 
     let image_matrix = pixelate(&image, (pixelate_width, pixelate_height));
+
+    file_path.set_extension("png");
+    let file_name = Path::new(&file_path).file_name().unwrap().to_str().unwrap();
     let pixie_file_name = format!(
         "pixie_{:03}_{:03}_{}",
         pixelate_width, pixelate_height, file_name
     );
-    let _ = image_matrix.save_with_format(&pixie_file_name, ImageFormat::Jpeg);
+    let _ = image_matrix.save_with_format(&pixie_file_name, ImageFormat::Png);
     println!("{pixie_file_name}: ({width}, {height})");
 
     Ok(())
