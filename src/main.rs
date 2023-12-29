@@ -1,6 +1,6 @@
 use clap::Parser;
 use image::io::Reader as ImageReader;
-use image::{DynamicImage, GenericImageView, ImageBuffer, Rgba};
+use image::{DynamicImage, GenericImageView, ImageBuffer, ImageFormat, Rgba};
 use std::path::Path;
 
 #[derive(Parser)]
@@ -53,7 +53,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "pixie_{:03}_{:03}_{}",
         pixelate_width, pixelate_height, file_name
     );
-    let _ = image_matrix.save(&pixie_file_name);
+    let _ = image_matrix.save_with_format(&pixie_file_name, ImageFormat::Jpeg);
     println!("{pixie_file_name}: ({width}, {height})");
 
     Ok(())
